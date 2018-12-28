@@ -1,11 +1,17 @@
 def placarBasquete(partida):
+    
     pontuacao = []
     times = []
+    
     while True:
 
+        mostrarPlacar(partida)
+
+        print()
         print('[1] - Pontuar')
         print('[2] - Voltar pontuação')
         print('[3] - Sair')
+        print()
 
         opcao = int(input("O que você deseja fazer? "))
         
@@ -18,6 +24,7 @@ def placarBasquete(partida):
         else:
             verificarPontos(partida)
             break
+
 def voltarPonto(pontuacao, times):
     
     print(pontuacao)
@@ -50,7 +57,6 @@ def mostrarPlacar(partida):
 
 def pontuar(partida, pontuacao, times):
     
-    mostrarPlacar(partida)
     print("[1] - Casa")
     print("[2] - Visitante")
     p = int(input("Quem fez o ponto? "))
@@ -72,7 +78,6 @@ def pontuar(partida, pontuacao, times):
     else:
         time = 'visitante'
     adcPonto(partida, time, p2, pontuacao, times)
-    mostrarPlacar(partida)
 
 partida = {'casa':0, 'visitante':0}
 
