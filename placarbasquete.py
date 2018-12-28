@@ -51,7 +51,7 @@ def placar(partida):
             pass
         else:
             break
-    verificarPontos(casa, visitante)
+    verificarPontos(partida)
 
 partida = {'casa':0, 'visitante':0}
 
