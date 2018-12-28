@@ -35,7 +35,10 @@ def placar(partida):
         print("[3] - 3 pontos")
         p2 = int(input("Quantos pontos fez? "))
         while(p2 != 1 and p2 != 2 and p2 != 3):
-            p2 = int(input("[1] - 1 ponto\n[2] - 2 pontos\n[3] - pontos\nQuantos pontos fez? "))
+            print("[1] - 1 ponto")
+            print("[2] - 2 pontos")
+            print("[3] - 3 pontos")
+            p2 = int(input("Quantos pontos fez? "))
         if(p == 1):
             time = 'casa'
         else:
