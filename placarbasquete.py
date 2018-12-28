@@ -1,8 +1,5 @@
 def placarBasquete(partida):
-    
-    pontuacao = []
-    times = []
-    
+        
     while True:
 
         mostrarPlacar(partida)
@@ -18,31 +15,57 @@ def placarBasquete(partida):
         while(opcao != 1 and opcao != 2 and opcao != 3):
             opcao = int(input("O que você deseja fazer? "))
         if(opcao == 1):
-            pontuar(partida, pontuacao, times)
+            pontuar(partida)
         elif(opcao == 2):
-            voltarPonto(pontuacao, times)
+            voltarPonto(partida)
         else:
             verificarPontos(partida)
             break
 
-def voltarPonto(pontuacao, times):
-    
-    print(pontuacao)
-    print(times)
+def voltarPonto(partida):
 
-def adcPonto(partida, time, p2, pontuacao, times):
-    
-    partida[time] += p2
-    
-    pontuacao.append(p2)
-    times.append(time)
+    qnt = len(partida['historico'])
+    print(partida)
+
+    if(qnt == 1):
+        print("Não há registro de pontuação.")
+
+    else:
+        cont = 0
+
+        if(partida['historico'][qnt - 1]['casa'] != partida['historico'][qnt - 2]['casa']):
+            cont += 1
+        elif(partida['historico'][qnt - 1]['visitante'] != partida['historico'][qnt - 2]['visitante']):
+            pass
+
+        if(cont == 1):
+            time = 'casa'
+        else:
+            time = 'visitante'
+
+        print(time)
+        partida['historico'].pop(qnt - 1)
+        print(partida)
+
+
+def adcPonto(partida, time, p2):
+
+    print(partida)
+
+    partida["placar"][time] += p2
+
+    add = f"Casa: {partida['placar']['casa']}, Visitantes: {partida['placar']['visitante']}"
+
+    partida['historico'].append(add)
+
+    print(partida)
 
 def verificarPontos(partida):
 
     print()
-    if(partida['casa'] > partida['visitante']):
+    if(partida['placar']['casa'] > partida['placar']['visitante']):
         print("Time da Casa venceu o jogo!")
-    elif(partida['casa'] < partida['visitante']):
+    elif(partida['placar']['casa'] < partida['placar']['visitante']):
         print("Time dos Visitantes venceram o jogo!")
     else:
         print("Empate!")
@@ -52,10 +75,10 @@ def mostrarPlacar(partida):
     print()
     print("                     PLACAR                    ")
     print()
-    print(f"Casa: {str(partida['casa'])}                                   Visitantes: {str(partida['visitante'])}")
+    print(f"Casa: {str(partida['placar']['casa'])}                                   Visitantes: {str(partida['placar']['visitante'])}")
     print()
 
-def pontuar(partida, pontuacao, times):
+def pontuar(partida):
     
     print("[1] - Casa")
     print("[2] - Visitante")
@@ -77,8 +100,8 @@ def pontuar(partida, pontuacao, times):
         time = 'casa'
     else:
         time = 'visitante'
-    adcPonto(partida, time, p2, pontuacao, times)
+    adcPonto(partida, time, p2)
 
-partida = {'casa':0, 'visitante':0}
+partida = {"placar":{'casa':0, 'visitante':0}, "historico":[]}
 
 placarBasquete(partida)
