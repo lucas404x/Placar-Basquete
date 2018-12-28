@@ -1,5 +1,34 @@
-def adcPonto(partida, time, p2):
+def placarBasquete(partida):
+    pontuacao = []
+    times = []
+    while True:
+
+        print('[1] - Pontuar')
+        print('[2] - Voltar pontuação')
+        print('[3] - Sair')
+
+        opcao = int(input("O que você deseja fazer? "))
+        
+        while(opcao != 1 and opcao != 2 and opcao != 3):
+            opcao = int(input("O que você deseja fazer? "))
+        if(opcao == 1):
+            pontuar(partida, pontuacao, times)
+        elif(opcao == 2):
+            voltarPonto(pontuacao, times)
+        else:
+            verificarPontos(partida)
+            break
+def voltarPonto(pontuacao, times):
+    
+    print(pontuacao)
+    print(times)
+
+def adcPonto(partida, time, p2, pontuacao, times):
+    
     partida[time] += p2
+    
+    pontuacao.append(p2)
+    times.append(time)
 
 def verificarPontos(partida):
 
@@ -19,40 +48,32 @@ def mostrarPlacar(partida):
     print(f"Casa: {str(partida['casa'])}                                   Visitantes: {str(partida['visitante'])}")
     print()
 
-def placar(partida):
-
-    while True:
-        mostrarPlacar(partida)
+def pontuar(partida, pontuacao, times):
+    
+    mostrarPlacar(partida)
+    print("[1] - Casa")
+    print("[2] - Visitante")
+    p = int(input("Quem fez o ponto? "))
+    while(p != 1 and p != 2):
         print("[1] - Casa")
         print("[2] - Visitante")
         p = int(input("Quem fez o ponto? "))
-        while(p != 1 and p != 2):
-            print("[1] - Casa")
-            print("[2] - Visitante")
-            p = int(input("Quem fez o ponto? "))
+    print("[1] - 1 ponto")
+    print("[2] - 2 pontos")
+    print("[3] - 3 pontos")
+    p2 = int(input("Quantos pontos fez? "))
+    while(p2 != 1 and p2 != 2 and p2 != 3):
         print("[1] - 1 ponto")
         print("[2] - 2 pontos")
         print("[3] - 3 pontos")
         p2 = int(input("Quantos pontos fez? "))
-        while(p2 != 1 and p2 != 2 and p2 != 3):
-            print("[1] - 1 ponto")
-            print("[2] - 2 pontos")
-            print("[3] - 3 pontos")
-            p2 = int(input("Quantos pontos fez? "))
-        if(p == 1):
-            time = 'casa'
-        else:
-            time = 'visitante'
-        adcPonto(partida, time, p2)
-        p3 = input("Deseja continuar? [S/N]: ").upper()
-        while(p3 != 'S' and p3 != 'N'):
-            p3 = input("Deseja continuar? [S/N]: ").upper()
-        if(p3 == 'S'):
-            pass
-        else:
-            break
-    verificarPontos(partida)
+    if(p == 1):
+        time = 'casa'
+    else:
+        time = 'visitante'
+    adcPonto(partida, time, p2, pontuacao, times)
+    mostrarPlacar(partida)
 
 partida = {'casa':0, 'visitante':0}
 
-placar(partida)
+placarBasquete(partida)
