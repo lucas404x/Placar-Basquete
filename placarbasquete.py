@@ -1,29 +1,36 @@
-def verificarPontos(casa, visitante):
+def verificarPontos(partida):
 
     print()
-    if(casa > visitante):
+    if(partida['casa'] > partida['visitante']):
         print("Time da Casa venceu o jogo!")
-    elif(casa < visitante):
+    elif(partida['casa'] < partida['visitante']):
         print("Time dos Visitantes venceram o jogo!")
     else:
         print("Empate!")
     
-def mostrarPlacar(casa, visitante):
+def mostrarPlacar(partida):
 
     print()
     print("                 PLACAR                    ")
     print()
-    print("Casa: " + str(casa) + "                    " + "Visitantes: " + str(visitante))
+    print("Casa: " + str(partida['casa']) + "                    " + "Visitantes: " + str(partida['visitante']))
     print()
 
-def pontosAdc(casa, visitante):
+def placar(partida):
 
     while True:
-        mostrarPlacar(casa, visitante)
-        p = int(input("[1] - Casa\n[2] - Visitante\nQuem fez o ponto? "))
+        mostrarPlacar(partida)
+        print("[1] - Casa")
+        print("[2] - Visitante")
+        p = int(input("Quem fez o ponto? "))
         while(p != 1 and p != 2):
-            p = int(input("[1] - Casa\n[2] - Visitante\nQuem fez o ponto? "))
-        p2 = int(input("[1] - 1 ponto\n[2] - 2 pontos\n[3] - pontos\nQuantos pontos fez? "))
+            print("[1] - Casa")
+            print("[2] - Visitante")
+            p = int(input("Quem fez o ponto? "))
+        print("[1] - 1 ponto")
+        print("[2] - 2 pontos")
+        print("[3] - 3 pontos")
+        p2 = int(input("Quantos pontos fez? "))
         while(p2 != 1 and p2 != 2 and p2 != 3):
             p2 = int(input("[1] - 1 ponto\n[2] - 2 pontos\n[3] - pontos\nQuantos pontos fez? "))
         if(p == 1):
@@ -39,7 +46,6 @@ def pontosAdc(casa, visitante):
             break
     verificarPontos(casa, visitante)
 
-casa = 0
-visitante = 0
+partida = {'casa':0, 'visitante':0}
 
-pontosAdc(casa, visitante)
+placar(partida)
