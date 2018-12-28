@@ -14,9 +14,9 @@ def verificarPontos(partida):
 def mostrarPlacar(partida):
 
     print()
-    print("                 PLACAR                    ")
+    print("                     PLACAR                    ")
     print()
-    print("Casa: " + str(partida['casa']) + "                    " + "Visitantes: " + str(partida['visitante']))
+    print(f"Casa: {str(partida['casa'])}                                   Visitantes: {str(partida['visitante'])}")
     print()
 
 def placar(partida):
