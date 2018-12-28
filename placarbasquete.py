@@ -1,3 +1,6 @@
+def adcPonto(partida, time, p2):
+    partida[time] += p2
+
 def verificarPontos(partida):
 
     print()
@@ -34,9 +37,10 @@ def placar(partida):
         while(p2 != 1 and p2 != 2 and p2 != 3):
             p2 = int(input("[1] - 1 ponto\n[2] - 2 pontos\n[3] - pontos\nQuantos pontos fez? "))
         if(p == 1):
-            casa += p2
+            time = 'casa'
         else:
-            visitante += p2
+            time = 'visitante'
+        adcPonto(partida, time, p2)
         p3 = input("Deseja continuar? [S/N]: ").upper()
         while(p3 != 'S' and p3 != 'N'):
             p3 = input("Deseja continuar? [S/N]: ").upper()
