@@ -29,9 +29,15 @@ def voltarPonto(partida):
 
     print(partida)
 
-    if(qnt < 2):
+    if(qnt < 1):
 
         print("Não há registro de pontuação.")
+
+    elif(qnt == 1):
+
+        partida['placar']['casa'] = 0
+
+        partida['placar']['visitante'] = 0
 
     else:
 
