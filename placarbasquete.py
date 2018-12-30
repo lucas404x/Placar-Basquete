@@ -22,28 +22,21 @@ def placarBasquete(partida):
             verificarPontos(partida)
             break
 
+
 def voltarPonto(partida):
 
     qnt = len(partida['historico'])
+
     print(partida)
 
-    if(qnt == 1):
+    if(qnt < 2):
+
         print("Não há registro de pontuação.")
 
     else:
-        cont = 0
 
-        if(partida['historico'][qnt - 1]['casa'] != partida['historico'][qnt - 2]['casa']):
-            cont += 1
-        elif(partida['historico'][qnt - 1]['visitante'] != partida['historico'][qnt - 2]['visitante']):
-            pass
-
-        if(cont == 1):
-            time = 'casa'
-        else:
-            time = 'visitante'
-
-        print(time)
+        time = partida['marcatime'][len(partida['marcatime']) - 1]
+        partida['placar'][time] = partida['placar'][time] - partida['marcaponto'][len(partida['marcaponto']) - 1]
         partida['historico'].pop(qnt - 1)
         print(partida)
 
@@ -57,6 +50,10 @@ def adcPonto(partida, time, p2):
     add = f"Casa: {partida['placar']['casa']}, Visitantes: {partida['placar']['visitante']}"
 
     partida['historico'].append(add)
+
+    partida['marcatime'].append(time)
+
+    partida['marcaponto'].append(p2)
 
     print(partida)
 
@@ -102,6 +99,6 @@ def pontuar(partida):
         time = 'visitante'
     adcPonto(partida, time, p2)
 
-partida = {"placar":{'casa':0, 'visitante':0}, "historico":[]}
+partida = {"placar":{'casa':0, 'visitante':0}, "historico":[], "marcatime":[], "marcaponto": []}
 
 placarBasquete(partida)
