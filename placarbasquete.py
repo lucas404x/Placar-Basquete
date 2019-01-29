@@ -1,6 +1,6 @@
-class time:
+class placarBasquete:
 
-    def __init__(self, casa = 0, visitante = 0, listaPonto = {'time':[], 'ponto':[]}):
+    def __init__(self, casa = 0, visitante = 0, listaPonto = []):
 
         self.listaPonto = listaPonto
         self.casa = casa
@@ -9,29 +9,30 @@ class time:
     def addPonto(self, ponto, time):
 
         if(time == "Casa"):
-
             self.casa += ponto
-
+            aux = {time:self.casa}
         else:
-
             self.visitante += ponto
-
-        self.listaPonto['ponto'].append(ponto)
-        self.listaPonto['time'].append(time)
-    
+            aux = {time:ponto}
+        self.listaPonto.append(aux)
+        
     def voltarPonto(self):
 
-        self.listaPonto['ponto'].pop()
-        pontoAnterior = len(self.listaPonto['ponto']) - 1
-        timePonto = len(self.listaPonto['time']) - 1
-        if(timePonto == "Casa"):
-            self.casa = self.listaPonto['ponto'][pontoAnterior]
+        posicaoTime = len(self.listaPonto) - 1
+
+        for i in self.listaPonto[posicaoTime].keys():
+            time = i
+        for i in self.listaPonto[posicaoTime].values():
+            valor = i
+        print(time)
+        print(valor)
+        if(time == "Visitante"):
+            self.visitante = self.visitante - valor
         else:
-            self.visitante = self.listaPonto['ponto'][pontoAnterior]
+            self.casa = self.casa - valor
+        self.listaPonto.pop()
         
 
-class placar(time):
-    
     def imprimirPlacar(self):
         print()
         print("               PLACAR                        ")
@@ -39,4 +40,4 @@ class placar(time):
         print(f"Casa: {self.casa}          X          Visitantes: {self.visitante}")
         print()
 
-placar = placar()
+placar = placarBasquete()
