@@ -1,5 +1,6 @@
 from tkinter import*
 from functools import partial
+from tkinter import messagebox
 
 class Placar(object):
 
@@ -30,7 +31,7 @@ class Placar(object):
         #Buttons
 
         self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.identificar_time, True)).place(x = 150, y = 300, width = 200)
-        self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black').place(x = 150, y = 350, width = 200)
+        self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.voltarPonto, True)).place(x = 150, y = 350, width = 200)
         self.bt_sair = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black').place(x = 150, y = 400, width = 200)
 
         #Empacotamento
@@ -51,7 +52,7 @@ class Placar(object):
             self.mb.place(x = 175, y = 230)
             
     def identificar_ponto(self, time, click):
-
+            
         if click is True:
 
             self.time = time
@@ -67,9 +68,39 @@ class Placar(object):
         if click is True:
             
             self.info[self.time] += ponto
+            self.info['listaPonto'].append({self.time:ponto})
+            print(self.info)
             self.mb.menu.destroy()
             self.mb.destroy()
             self.__init__(self.janela, "CAJUEIRO")
+
+    def voltarPonto(self, click):
+
+        if click is True:
+            
+            if len(self.info['listaPonto']) == 0:
+
+                 erro = messagebox.showinfo("", "Você não adicionou nenhuma pontuação a base de pontos.")
+
+            else: 
+                
+                ultimoPonto = len(self.info['listaPonto']) - 1
+
+                for i in self.info['listaPonto'][ultimoPonto].keys():
+
+                    self.time = i
+                    
+                print(self.time)
+
+                for i in self.info['listaPonto'][ultimoPonto].values():
+
+                    self.ponto = i
+                    
+                print(self.ponto)
+
+                self.info[self.time] -= self.ponto
+                self.info['listaPonto'].pop()
+                self.__init__(self.janela, "CAJUEIRO")
     
 janela = Tk()
 Placar(janela, "CAJUEIRO")
