@@ -1,99 +1,55 @@
-class placarBasquete:
+from tkinter import*
+from functools import partial
 
-    def __init__(self, casa = 0, visitante = 0, listaPonto = []):
+class Placar(object):
 
-        self.listaPonto = listaPonto
-        self.casa = casa
-        self.visitante = visitante
+    def __init__(self, janela, local, info = {'casa':0, 'visitante':0, 'listaPonto':[]}, pontos = None):
 
-    def addPonto(self, ponto, time):
+        self.janela = janela
+        self.info = info
+        self.local = local
+        self.pontos = pontos
 
-        if(time == "Casa"):
-            self.casa += ponto
-            aux = {time:ponto}
-        else:
-            self.visitante += ponto
-            aux = {time:ponto}
-        self.listaPonto.append(aux)
+        #Definindo Cor
 
-    def voltarPonto(self):
+        color_background = 'black'
+        cor_widget = 'white'
+        fonte = ("Arial", 30, "bold")
 
-        posicaoTime = len(self.listaPonto) - 1
+        self.janela['bg'] = color_background
+        self.janela.resizable(False, False)
 
-        for i in self.listaPonto[posicaoTime].keys():
-            time = i
-        for i in self.listaPonto[posicaoTime].values():
-            valor = i
-        if(time == "Visitante"):
-            self.visitante = self.visitante - valor
-        else:
-            self.casa = self.casa - valor
-        self.listaPonto.pop()
+        #Labels
+        
+        lb_casa = Label(self.janela, text = "HOME", foreground = cor_widget, font = fonte, bg = color_background).place(x = 30, y = 100)
+        lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
+        lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background).place(x = 82, y = 160)
+        lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background).place(x = 372, y = 160)
+        lb_local = Label(self.janela, text = f"LOCAL: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 100, y = 10)
+        lb_x = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
 
+        #Buttons
 
-    def imprimirPlacar(self):
-        print()
-        print("               PLACAR                        ")
-        print()
-        print(f"Casa: {self.casa}          X          Visitantes: {self.visitante}")
-        print()
+        self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.addPonto, True)).place(x = 150, y = 300, width = 200)
+        self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black').place(x = 150, y = 350, width = 200)
+        self.bt_sair = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black').place(x = 150, y = 400, width = 200)
 
-def main(placarBasquete):
+    def addPonto(self, click):
 
-    placar = placarBasquete()
-    opcao = -1
-    while(opcao != 4):
-        print()
-        print("[1] - Pontuar")
-        print("[2] - Voltar pontuação")
-        print("[3] - Visualizar o placar")
-        print("[4] - Sair")
-        print()
-        opcao = int(input("O que deseja fazer? "))
-        while(opcao < 1 and opcao > 4):
-            opcao = int(input("O que deseja fazer? "))
-        if(opcao == 1):
-            pontuarTime(placar)
-        elif(opcao == 2):
-            placar.voltarPonto()
-        elif(opcao == 3):
-            placar.imprimirPlacar()
-        elif(opcao == 4):
-            resultadoFinal(placar)
+        if click is True:
 
-def pontuarTime(placar):
-
-    placar.imprimirPlacar()
-    print("[1] - Casa")
-    print("[2] - Visitante")
-    print()
-    opcao = int(input("Qual time deseja pontuar? "))
-    print()
-    print("[1] - 1 ponto")
-    print("[2] - 2 pontos")
-    print("[3] - 3 pontos")
-    print()
-    ponto = int(input("Quantos pontos? "))
-    while(ponto < 1 and ponto > 3):
-        ponto = int(input("Quantos pontos? "))
-    if(opcao == 1):
-        placar.addPonto(ponto, "Casa")
-    else:
-        placar.addPonto(ponto, "Visitante")
-
-def resultadoFinal(placar):
-    if(placar.casa > placar.visitante):
-        print()
-        print("Vitória para o time da Casa!")
-        print()
-    elif(placar.casa < placar.visitante):
-        print()
-        print("Vitória para o time dos Vistantes!")
-        print()
-    else:
-        print()
-        print("Empate!")
-        print()
-    placar.imprimirPlacar()
-
-main(placarBasquete)
+            self.mb = Menubutton(self.janela, text = "Qual time pontuar?\nClique aqui", bg = 'black', foreground = 'white')
+            self.mb.menu = Menu(self.mb)
+            self.mb['menu'] = self.mb.menu
+            self.mb.menu.add_command(label = "HOME", command = partial(self.identificar_time, "casa"))
+            self.mb.menu.add_command(label = "GUEST", command = partial(self.identificar_time, "visitante"))
+            self.mb.place(x = 190, y = 230)
+            
+    def identificar_time(self, time):
+        pass
+    
+janela = Tk()
+Placar(janela, "CAJUEIRO")
+janela.title("Placar de Basquete")
+janela.geometry("500x500")
+janela.mainloop()
