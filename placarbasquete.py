@@ -22,8 +22,8 @@ class Placar(object):
         
         lb_casa = Label(self.janela, text = "HOME", foreground = cor_widget, font = fonte, bg = color_background).place(x = 30, y = 100)
         lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
-        self.lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
-        self.lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
+        lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
+        lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
         lb_local = Label(self.janela, text = f"LOCAL: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 100, y = 10)
         lb_x = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
 
@@ -35,8 +35,8 @@ class Placar(object):
 
         #Empacotamento
 
-        self.lbponto_casa.place(x = 82, y = 160)
-        self.lbponto_visitante.place(x = 372, y = 160)
+        lbponto_casa.place(x = 82, y = 160)
+        lbponto_visitante.place(x = 372, y = 160)
         
         
     def identificar_time(self, click):
