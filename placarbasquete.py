@@ -32,7 +32,7 @@ class Placar(object):
 
         self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.identificar_time, True)).place(x = 150, y = 300, width = 200)
         self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.voltarPonto, True)).place(x = 150, y = 350, width = 200)
-        self.bt_sair = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black').place(x = 150, y = 400, width = 200)
+        self.bt_finalizar = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.finalizar, True)).place(x = 150, y = 400, width = 200)
 
         #Empacotamento
 
@@ -96,6 +96,27 @@ class Placar(object):
                 self.info[self.time] -= self.ponto
                 self.info['listaPonto'].pop()
                 self.__init__(self.janela, self.local)
+
+    def finalizar(self, click):
+
+        if click is True:
+
+            if self.info['casa'] > self.info['visitante']:
+
+                venceu = messagebox.showinfo("", "O time da Casa venceu!")
+
+            elif self.info['casa'] < self.info['visitante']:
+
+                venceu = messagebox.showinfo("", "O time dos Visitantes venceram!")
+
+            else:
+
+                empate = messagebox.showinfo("", "Empate!")
+
+            self.info['casa'] = 0
+            self.info['visitante'] = 0
+            self.info['listaPonto'] = []
+            self.__init__(self.janela, self.local)
     
 janela = Tk()
 Placar(janela, "Cajueiro")
