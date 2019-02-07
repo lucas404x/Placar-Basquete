@@ -25,7 +25,7 @@ class Placar(object):
         lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
         lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
         lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
-        lb_local = Label(self.janela, text = f"LOCAL: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 100, y = 10)
+        lb_local = Label(self.janela, text = f"Local: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 130, y = 10)
         lb_x = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
 
         #Buttons
@@ -69,10 +69,9 @@ class Placar(object):
             
             self.info[self.time] += ponto
             self.info['listaPonto'].append({self.time:ponto})
-            print(self.info)
             self.mb.menu.destroy()
             self.mb.destroy()
-            self.__init__(self.janela, "CAJUEIRO")
+            self.__init__(self.janela, self.local)
 
     def voltarPonto(self, click):
 
@@ -89,21 +88,17 @@ class Placar(object):
                 for i in self.info['listaPonto'][ultimoPonto].keys():
 
                     self.time = i
-                    
-                print(self.time)
 
                 for i in self.info['listaPonto'][ultimoPonto].values():
 
                     self.ponto = i
-                    
-                print(self.ponto)
 
                 self.info[self.time] -= self.ponto
                 self.info['listaPonto'].pop()
-                self.__init__(self.janela, "CAJUEIRO")
+                self.__init__(self.janela, self.local)
     
 janela = Tk()
-Placar(janela, "CAJUEIRO")
+Placar(janela, "Cajueiro")
 janela.title("Placar de Basquete")
 janela.geometry("500x500")
 janela.mainloop()
