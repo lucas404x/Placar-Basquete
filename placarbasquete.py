@@ -6,6 +6,7 @@ class Placar(object):
 
     def __init__(self, janela, local, info = {'casa':0, 'visitante':0, 'listaPonto':[]}):
 
+
         self.janela = janela
         self.info = info
         self.local = local
@@ -20,7 +21,7 @@ class Placar(object):
         self.janela.resizable(False, False)
 
         #Labels
-        
+
         lb_casa = Label(self.janela, text = "HOME", foreground = cor_widget, font = fonte, bg = color_background).place(x = 30, y = 100)
         lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
         lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
@@ -30,59 +31,86 @@ class Placar(object):
 
         #Buttons
 
-        self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.identificar_time, True)).place(x = 150, y = 300, width = 200)
-        self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.voltarPonto, True)).place(x = 150, y = 350, width = 200)
-        self.bt_finalizar = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.finalizar, True)).place(x = 150, y = 400, width = 200)
+        self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.identificar_time, True))
+        self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.voltarPonto, True))
+        self.bt_finalizar = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.finalizar, True))
 
         #Empacotamento
 
         lbponto_casa.place(x = 82, y = 160)
         lbponto_visitante.place(x = 372, y = 160)
-        
-        
+        self.bt_pontuar.place(x = 150, y = 300, width = 200)
+        self.bt_voltarponto.place(x = 150, y = 350, width = 200)
+        self.bt_finalizar.place(x = 150, y = 400, width = 200)
+
+
     def identificar_time(self, click):
 
         if click is True:
 
-            self.mb = Menubutton(self.janela, text = "Qual time você quer pontuar?\nClique aqui", bg = 'black', foreground = 'white')
-            self.mb.menu = Menu(self.mb)
-            self.mb['menu'] = self.mb.menu
-            self.mb.menu.add_command(label = "HOME", command = partial(self.identificar_ponto, "casa", True))
-            self.mb.menu.add_command(label = "GUEST", command = partial(self.identificar_ponto, "visitante", True))
-            self.mb.place(x = 175, y = 230)
-            
+            #Destruindo os botões
+
+            self.bt_pontuar.destroy()
+            self.bt_voltarponto.destroy()
+            self.bt_finalizar.destroy()
+
+            #Criando os CheckButtons e o Label
+
+            self.cbt1 = Checkbutton(self.janela, bg = "black", command = partial(self.identificar_ponto, "casa", True))
+            self.cbt2 = Checkbutton(self.janela, bg = "black", command = partial(self.identificar_ponto, "visitante", True))
+            self.lb = Label(self.janela, text = "Selecione um time", bg = "black", font = ("Arial", 14, "bold"), foreground = "white")
+
+            #Empacotando
+
+            self.cbt1.place(x = 81, y = 200)
+            self.cbt2.place(x = 371, y = 200)
+            self.lb.place(x = 160, y = 220)
+
     def identificar_ponto(self, time, click):
-            
+
         if click is True:
 
+            #Alterando o Label
             self.time = time
-            self.mb['text'] = "Quantos pontos?"
-            self.mb.menu.delete('HOME')
-            self.mb.menu.delete('GUEST')
-            self.mb.menu.add_command(label = "1 ponto", command = partial(self.addPonto, 1, True))
-            self.mb.menu.add_command(label = "2 pontos", command = partial(self.addPonto, 2, True))
-            self.mb.menu.add_command(label = "3 pontos", command = partial(self.addPonto, 3, True))
-            
+            self.lb['text'] = "Quantos pontos?"
+            self.lb.place(x = 160, y = 220)
+
+            #Criando os CheckButtons
+
+            self.cbt3 = Checkbutton(self.janela, text = "1 ponto", font = ("Arial", 14, 'bold'), bg = 'black', foreground = 'white', command = partial(self.addPonto, 1, True))
+            self.cbt4 = Checkbutton(self.janela, text = "2 pontos", font = ("Arial", 14, 'bold'), bg = 'black', foreground = 'white', command = partial(self.addPonto, 2, True))
+            self.cbt5 = Checkbutton(self.janela, text = "3 pontos", font = ("Arial", 14, 'bold'), bg = 'black', foreground = 'white', command = partial(self.addPonto, 3, True))
+
+            #Empacotando
+
+            self.cbt3.place(x =  80, y = 340)
+            self.cbt4.place(x =  200, y = 340)
+            self.cbt5.place(x =  320, y = 340)
+
     def addPonto(self, ponto, click):
 
         if click is True:
             
             self.info[self.time] += ponto
             self.info['listaPonto'].append({self.time:ponto})
-            self.mb.menu.destroy()
-            self.mb.destroy()
+            self.lb.destroy()
+            self.cbt1.destroy()
+            self.cbt2.destroy()
+            self.cbt3.destroy()
+            self.cbt4.destroy()
+            self.cbt5.destroy()
             self.__init__(self.janela, self.local)
 
     def voltarPonto(self, click):
 
         if click is True:
-            
+
             if len(self.info['listaPonto']) == 0:
 
                  erro = messagebox.showinfo("", "Você não adicionou nenhuma pontuação a base de pontos.")
 
-            else: 
-                
+            else:
+
                 ultimoPonto = len(self.info['listaPonto']) - 1
 
                 for i in self.info['listaPonto'][ultimoPonto].keys():
@@ -117,7 +145,7 @@ class Placar(object):
             self.info['visitante'] = 0
             self.info['listaPonto'] = []
             self.__init__(self.janela, self.local)
-    
+
 janela = Tk()
 Placar(janela, "Cajueiro")
 janela.title("Placar de Basquete")
