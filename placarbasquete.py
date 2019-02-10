@@ -24,8 +24,8 @@ class Placar(object):
 
         lb_casa = Label(self.janela, text = "HOME", foreground = cor_widget, font = fonte, bg = color_background).place(x = 30, y = 100)
         lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
-        lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
-        lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
+        self.lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
+        self.lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
         lb_local = Label(self.janela, text = f"Local: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 130, y = 10)
         lb_x = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
 
@@ -37,8 +37,8 @@ class Placar(object):
 
         #Empacotamento
 
-        lbponto_casa.place(x = 82, y = 160)
-        lbponto_visitante.place(x = 372, y = 160)
+        self.lbponto_casa.place(x = 82, y = 160)
+        self.lbponto_visitante.place(x = 372, y = 160)
         self.bt_pontuar.place(x = 150, y = 300, width = 200)
         self.bt_voltarponto.place(x = 150, y = 350, width = 200)
         self.bt_finalizar.place(x = 150, y = 400, width = 200)
@@ -90,15 +90,17 @@ class Placar(object):
     def addPonto(self, ponto, click):
 
         if click is True:
-            
+
             self.info[self.time] += ponto
             self.info['listaPonto'].append({self.time:ponto})
+
             self.lb.destroy()
             self.cbt1.destroy()
             self.cbt2.destroy()
             self.cbt3.destroy()
             self.cbt4.destroy()
             self.cbt5.destroy()
+
             self.__init__(self.janela, self.local)
 
     def voltarPonto(self, click):
@@ -122,8 +124,16 @@ class Placar(object):
                     self.ponto = i
 
                 self.info[self.time] -= self.ponto
-                self.info['listaPonto'].pop()
-                self.__init__(self.janela, self.local)
+                
+                if self.time == 'casa':
+
+                    self.lbponto_casa['text'] = self.info[self.time]
+
+                else:
+
+                    self.lbponto_visitante['text'] = self.info[self.time]
+                    
+                self.info['listaPonto'].pop() 
 
     def finalizar(self, click):
 
@@ -143,8 +153,9 @@ class Placar(object):
 
             self.info['casa'] = 0
             self.info['visitante'] = 0
+            self.lbponto_casa['text'] = self.info['casa']
+            self.lbponto_visitante['text'] = self.info['visitante']
             self.info['listaPonto'] = []
-            self.__init__(self.janela, self.local)
 
 janela = Tk()
 Placar(janela, "Cajueiro")
