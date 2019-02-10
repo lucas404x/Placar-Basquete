@@ -26,14 +26,15 @@ class Placar(object):
         lb_visitante = Label(self.janela, text = "GUEST", foreground = cor_widget, font = fonte, bg = color_background).place(x = 320, y = 100)
         self.lbponto_casa = Label(self.janela, text = str(self.info['casa']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
         self.lbponto_visitante = Label(self.janela, text = str(self.info['visitante']), font = ('Arial', 20, 'bold'), foreground = cor_widget, bg = color_background)
-        lb_local = Label(self.janela, text = f"Local: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background).place(x = 130, y = 10)
-        lb_x = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
+        self.lb_local = Label(self.janela, text = f"Local: {self.local}", font = ('Arial', 25, 'bold'), foreground = cor_widget, bg = color_background)
+        lb_vs = Label(self.janela, text = 'VS', font = fonte, foreground = cor_widget, bg = color_background).place(x = 220, y = 100)
 
         #Buttons
 
         self.bt_pontuar = Button(self.janela, text = "Pontuar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.identificar_time, True))
         self.bt_voltarponto = Button(self.janela, text = "Voltar pontuação", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.voltarPonto, True))
         self.bt_finalizar = Button(self.janela, text = "Finalizar", font = ('Arial', 14, 'bold'), foreground = 'black', command = partial(self.finalizar, True))
+        self.bt_alterarLocal = Button(self.janela, text = "Alterar local", font = ("Arial", 10, 'bold'), foreground = 'black', command = partial(self.alterarLocal, True))
 
         #Empacotamento
 
@@ -42,6 +43,8 @@ class Placar(object):
         self.bt_pontuar.place(x = 150, y = 300, width = 200)
         self.bt_voltarponto.place(x = 150, y = 350, width = 200)
         self.bt_finalizar.place(x = 150, y = 400, width = 200)
+        self.bt_alterarLocal.place(x = 170, y = 60, width = 150, height = 25)
+        self.lb_local.place(x = 130, y = 10)
 
 
     def identificar_time(self, click):
@@ -50,10 +53,11 @@ class Placar(object):
 
             #Destruindo os botões
 
-            self.bt_pontuar.destroy()
-            self.bt_voltarponto.destroy()
-            self.bt_finalizar.destroy()
-
+            self.bt_pontuar.place_forget()
+            self.bt_voltarponto.place_forget()
+            self.bt_finalizar.place_forget()
+            self.bt_alterarLocal.place_forget()
+            
             #Criando os CheckButtons e o Label
 
             self.cbt1 = Checkbutton(self.janela, bg = "black", command = partial(self.identificar_ponto, "casa", True))
@@ -94,6 +98,11 @@ class Placar(object):
             self.info[self.time] += ponto
             self.info['listaPonto'].append({self.time:ponto})
 
+            if self.time == 'casa':
+                self.lbponto_casa['text'] = self.info[self.time]
+            else:
+                self.lbponto_visitante['text'] = self.info[self.time]
+                
             self.lb.destroy()
             self.cbt1.destroy()
             self.cbt2.destroy()
@@ -101,8 +110,11 @@ class Placar(object):
             self.cbt4.destroy()
             self.cbt5.destroy()
 
-            self.__init__(self.janela, self.local)
-
+            self.bt_pontuar.place(x = 150, y = 300, width = 200)
+            self.bt_voltarponto.place(x = 150, y = 350, width = 200)
+            self.bt_finalizar.place(x = 150, y = 400, width = 200)
+            self.bt_alterarLocal.place(x = 170, y = 60, width = 150, height = 25)
+            
     def voltarPonto(self, click):
 
         if click is True:
@@ -157,8 +169,26 @@ class Placar(object):
             self.lbponto_visitante['text'] = self.info['visitante']
             self.info['listaPonto'] = []
 
+    def alterarLocal(self, click):
+
+        if click is True:
+                
+            self.bt_alterarLocal.place_forget()
+            self.ent = Entry(self.janela)
+            self.bt = Button(self.janela, text = "Confirmar", font = ("Arial", 10, 'bold'), foreground = 'black', command = partial(self.alterar, True)) 
+            self.ent.place(x = 150, y = 60, width = 110)
+            self.bt.place(x = 270, y = 60)
+
+    def alterar(self, click):
+
+        if click is True:
+            self.lb_local['text'] = f"Local: {self.ent.get()}"
+            self.ent.destroy()
+            self.bt.destroy()
+            self.bt_alterarLocal.place(x = 170, y = 60, width = 150, height = 25)
+        
 janela = Tk()
-Placar(janela, "Cajueiro")
+Placar(janela, "Indefinido")
 janela.title("Placar de Basquete")
 janela.geometry("500x500")
 janela.mainloop()
