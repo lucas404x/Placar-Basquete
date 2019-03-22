@@ -112,9 +112,7 @@ class Placar(object):
             
     def voltarPonto(self):
 
-        if len(self.info['listaPonto']) == 0:
-            
-            erro = messagebox.showinfo("", "Você não adicionou nenhuma pontuação a base de pontos.")
+        if len(self.info['listaPonto']) == 0: messagebox.showinfo("", "Você não adicionou nenhuma pontuação a base de pontos.")
 
         else:
 
@@ -142,17 +140,11 @@ class Placar(object):
 
     def finalizar(self):
 
-        if self.info['casa'] > self.info['visitante']:
+        if self.info['casa'] > self.info['visitante']: messagebox.showinfo("", "O time da Casa venceu!")
 
-            venceu = messagebox.showinfo("", "O time da Casa venceu!")
+        elif self.info['casa'] < self.info['visitante']: messagebox.showinfo("", "O time dos Visitantes venceram!")
 
-        elif self.info['casa'] < self.info['visitante']:
-
-            venceu = messagebox.showinfo("", "O time dos Visitantes venceram!")
-
-        else:
-
-            empate = messagebox.showinfo("", "Empate!")
+        else: messagebox.showinfo("", "Empate!")
 
         self.info['casa'] = 0
         self.info['visitante'] = 0
